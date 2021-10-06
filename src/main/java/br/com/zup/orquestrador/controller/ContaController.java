@@ -3,6 +3,9 @@ package br.com.zup.orquestrador.controller;
 import br.com.zup.orquestrador.controller.dto.ContaDigitalResponse;
 import br.com.zup.orquestrador.controller.dto.TransacaoDto;
 import br.com.zup.orquestrador.service.client.TransacaoClient;
+import br.com.zup.orquestrador.service.kafka.ContaMensagem;
+import br.com.zup.orquestrador.service.kafka.ContaProducer;
+import br.com.zup.orquestrador.service.kafka.EnumOperacao;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +24,8 @@ public class ContaController {
     @Autowired
     private TransacaoClient client;
 
-    private KafkaTemplate<String, TransacaoDto> template;
+    @Autowired
+    private ContaProducer producer;
 
     @Value("${topico.transacao}")
     private String topico;
@@ -43,7 +47,8 @@ public class ContaController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
-//        template.send(topico, request);
+        ContaMensagem mensagem = credita.paraMensagem(EnumOperacao.DEPOSITO, request.getValor());
+        producer.send(mensagem);
 
         return ResponseEntity.ok(credita);
     }

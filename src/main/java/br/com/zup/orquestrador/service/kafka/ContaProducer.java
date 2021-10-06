@@ -24,8 +24,8 @@ public class ContaProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void send(ContaDigitalResponse response) {
-//        response.paraMensagem();
-//        kafkaTemplate.send(topic, )
+    public void send(ContaMensagem mensagem) {
+
+        kafkaTemplate.send(topic,mensagem);
     }
 }

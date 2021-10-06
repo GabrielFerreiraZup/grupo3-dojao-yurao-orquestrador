@@ -12,8 +12,9 @@ public class ContaDigitalResponse {
     private Long idCliente;
     private BigDecimal saldo;
 
-    public ContaMensagem paraMensagem(EnumOperacao operacao) {
-//        return new ContaMensagem(operacao, )
-        return null;
+    public ContaMensagem paraMensagem(EnumOperacao operacao,BigDecimal valor) {
+        return new ContaMensagem( operacao, valor , this.idCliente , this.numeroConta );
+
+
     }
 }

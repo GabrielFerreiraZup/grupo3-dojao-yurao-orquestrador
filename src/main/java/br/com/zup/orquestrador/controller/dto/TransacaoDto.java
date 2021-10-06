@@ -8,4 +8,8 @@ import java.math.BigDecimal;
 public class TransacaoDto {
     private BigDecimal valor;
     private Long idCliente;
+
+    public BigDecimal getValor() {
+        return valor;
+    }
 }
