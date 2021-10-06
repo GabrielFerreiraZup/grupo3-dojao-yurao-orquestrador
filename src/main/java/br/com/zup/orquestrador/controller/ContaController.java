@@ -1,5 +1,6 @@
 package br.com.zup.orquestrador.controller;
 
+import br.com.zup.orquestrador.controller.dto.ContaDigitalResponse;
 import br.com.zup.orquestrador.controller.dto.TransacaoDto;
 import br.com.zup.orquestrador.service.client.TransacaoClient;
 import feign.FeignException;
@@ -30,11 +31,17 @@ public class ContaController {
             @Valid @RequestBody TransacaoDto request,
             @PathVariable String numeroConta
     ) {
-        Map<String, Object> credita = new HashMap<>();
+        ContaDigitalResponse credita = null;
         try {
             credita = client.credita(request, numeroConta);
         } catch (FeignException.NotFound e) {
-
+            return ResponseEntity.notFound().build();
+        } catch (FeignException.UnprocessableEntity e) {
+            return ResponseEntity.unprocessableEntity().build();
+        } catch (FeignException.BadRequest e) {
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
 //        template.send(topico, request);
 

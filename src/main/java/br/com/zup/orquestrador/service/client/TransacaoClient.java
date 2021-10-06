@@ -1,5 +1,6 @@
 package br.com.zup.orquestrador.service.client;
 
+import br.com.zup.orquestrador.controller.dto.ContaDigitalResponse;
 import br.com.zup.orquestrador.controller.dto.TransacaoDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +15,13 @@ import java.util.HashMap;
 public interface TransacaoClient {
 
     @PutMapping("{numeroConta}/credita")
-    public HashMap<String, Object> credita(
+    public ContaDigitalResponse credita(
             @Valid @RequestBody TransacaoDto request,
             @PathVariable String numeroConta
     );
 
     @PutMapping("{numeroConta}/debita")
-    public HashMap<String, Object> debita(
+    public ContaDigitalResponse debita(
             @Valid @RequestBody TransacaoDto request,
             @PathVariable String numeroConta
     );
