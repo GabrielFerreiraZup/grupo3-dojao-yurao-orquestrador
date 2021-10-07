@@ -52,4 +52,26 @@ public class ContaController {
 
         return ResponseEntity.ok(credita);
     }
+    @PutMapping("debita")
+    public ResponseEntity<?> debita(
+            @Valid @RequestBody TransacaoDto request,
+            @PathVariable String numeroConta
+    ) {
+        ContaDigitalResponse debita = null;
+        try {
+            debita = client.debita(request, numeroConta);
+        } catch (FeignException.NotFound e) {
+            return ResponseEntity.notFound().build();
+        } catch (FeignException.UnprocessableEntity e) {
+            return ResponseEntity.unprocessableEntity().build();
+        } catch (FeignException.BadRequest e) {
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+        ContaMensagem mensagem = debita.paraMensagem(EnumOperacao.DEBITO, request.getValor());
+        producer.send(mensagem);
+
+        return ResponseEntity.ok(debita);
+    }
 }

@@ -25,4 +25,5 @@ public class ContaMensagem {
         this.clienteId = clienteId;
         this.contaParticipante = contaParticipante;
     }
+
 }

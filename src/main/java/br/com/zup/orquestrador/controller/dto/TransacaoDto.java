@@ -9,7 +9,13 @@ public class TransacaoDto {
     private BigDecimal valor;
     private Long idCliente;
 
+    public TransacaoDto(BigDecimal valor, Long idCliente) {
+        this.valor = valor;
+        this.idCliente = idCliente;
+    }
+
     public BigDecimal getValor() {
         return valor;
     }
+
 }
