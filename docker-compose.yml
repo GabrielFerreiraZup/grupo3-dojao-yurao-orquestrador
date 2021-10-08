@@ -23,6 +23,17 @@ services:
       POSTGRES_PASSWORD: root
       POSTGRES_DB: dogaoyurao
 
+  postgres_email:
+    image: "postgres:9.6.23"
+    ports:
+      - "5436:5432"
+    volumes:
+      - postgres-email:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: dogaoyurao
+
   zookeeper:
     image: "confluentinc/cp-zookeeper:5.2.1"
     environment:
@@ -52,4 +63,5 @@ networks:
 volumes:
   postgres:
   postgres-conta:
+  postgres-email:
   pgadmin:
